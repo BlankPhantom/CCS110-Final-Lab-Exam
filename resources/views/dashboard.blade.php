@@ -14,7 +14,24 @@
                         {{ session('success') }}
                     </div>
                 @endif
+                <form action="{{ route('news.search') }}" method="GET" class="mb-4">
+                    <div class="mb-2">
+                        <label for="headline" class="block font-medium text-sm">Search by Headline:</label>
+                        <input type="text" name="headline" id="headline" class="form-input w-full">
+                    </div>
 
+                    <div class="mb-2">
+                        <label for="author" class="block font-medium text-sm">Search by Author:</label>
+                        <input type="text" name="author" id="author" class="form-input w-full">
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="date" class="block font-medium text-sm">Search by Date:</label>
+                        <input type="date" name="date" id="date" class="form-input w-full">
+                    </div>
+
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Search</button>
+                </form>
                 <!-- Form to Create News Post -->
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h3 class="text-lg font-semibold mb-4">Create a New Post</h3>
@@ -71,7 +88,7 @@
 
                 <!-- List of News Posts -->
                 <div class="mt-8">
-                    <h3 class="text-lg font-semibold mb-4">All News Posts</h3>
+                    <h3 class="text-lg font-semibold mb-4 ms-4">All News Posts</h3>
                     <div class="space-y-4">
                         @foreach($news as $new)
                             <div class="p-4 bg-gray-100 rounded-lg">

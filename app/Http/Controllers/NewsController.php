@@ -19,7 +19,30 @@ class NewsController extends Controller
             return view('dashboard', compact('news'));
         }
     
-    
+        public function search(Request $request)
+        {
+            $query = News::query();
+
+            // Filter by headline if provided
+            if ($request->filled('headline')) {
+                $query->where('headline', 'LIKE', '%' . $request->headline . '%');
+            }
+
+            // Filter by author if provided
+            if ($request->filled('author')) {
+                $query->where('author', 'LIKE', '%' . $request->author . '%');
+            }
+
+            // Filter by date if provided
+            if ($request->filled('date')) {
+                $query->whereDate('date_published', $request->date);
+            }
+
+            $news = $query->latest()->get();
+
+            // Return a view with the search results
+            return view('search-results', compact('news'));
+        }
         // Store the new blog post
         public function store_news(Request $request)
         {

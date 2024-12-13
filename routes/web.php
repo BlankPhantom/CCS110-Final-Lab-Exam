@@ -17,9 +17,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
-Route::delete('/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
-Route::patch('/update/{id}', [NewsController::class, 'update'])->name('news.update');
-Route::post('/store-news', [NewsController::class, 'store_news'])->name('store-news');
+Route::get('/search-news', [NewsController::class, 'search'])->name('news.search');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/store-news', [NewsController::class, 'store_news'])->name('store-news');
+    Route::get('/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
+    Route::patch('/news/{id}', [NewsController::class, 'update'])->name('news.update');
+    Route::delete('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
+});
 
 require __DIR__.'/auth.php';
