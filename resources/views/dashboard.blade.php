@@ -8,62 +8,83 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <!-- Success Message -->
-    @if(session('success'))
-        <div class="alert alert-success mt-3">
-            {{ session('success') }}
-        </div>
-    @endif
+                <!-- Flash Message -->
+                @if(session('success'))
+                    <div class="p-4 mb-4 text-sm text-green-800 bg-green-200 rounded-lg">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
-    <!-- Blog Post Form -->
-    <div class="container mt-4">
-        <div class="card p-4">
-            <h3>Create New Blog Post</h3>
-            <form action="{{ route('store-news') }}" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <label for="title" class="form-label">Blog Title:</label>
-                    <input type="text" name="title" class="form-control" id="title" required>
-                    @error('title')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="content" class="form-label">Blog Content:</label>
-                    <textarea name="content" class="form-control" id="content" rows="6" required></textarea>
-                    @error('content')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Create Post</button>
-            </form>
-        </div>
-    </div>
+                <!-- Form to Create News Post -->
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <h3 class="text-lg font-semibold mb-4">Create a New Post</h3>
+                    <form action="{{ route('store-news') }}" method="POST">
+                        @csrf
+                        <div class="mb-4">
+                            <label for="author" class="block font-medium text-sm">Author:</label>
+                            <input type="text" id="author" name="author" 
+                                   class="form-input w-full mt-1" 
+                                   placeholder="Enter the news author" 
+                                   required>
+                            @error('headauthorline')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-    <!-- Display All Blogs -->
-    <div class="container blog-posts mt-5">
-        <h2>All Blog Posts</h2>
-        <div class="row">
-            @foreach($blogs as $blog)
-                <div class="col-12 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $blog->title }}</h5>
-                            <p class="card-text">{{ $blog->content }}</p>
-                            <p class="card-text"><small class="text-muted">By: {{ $blog->user->name }}</small></p>
+                        <div class="mb-4">
+                            <label for="headline" class="block font-medium text-sm">Headline:</label>
+                            <input type="text" id="headline" name="headline" 
+                                   class="form-input w-full mt-1" 
+                                   placeholder="Enter the news headline" 
+                                   required>
+                            @error('headline')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Posted on {{ $blog->created_at->format('F j, Y') }}</small>
+
+                        <div class="mb-4">
+                            <label for="content" class="block font-medium text-sm">Content:</label>
+                            <textarea id="content" name="content" rows="6" 
+                                      class="form-input w-full mt-1" 
+                                      placeholder="Write the news content here" 
+                                      required></textarea>
+                            @error('content')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
+
+                        <div class="mb-4">
+                            <label for="date_published" class="block font-medium text-sm">Date Published:</label>
+                            <input type="date" id="date_published" name="date_published" 
+                                   class="form-input w-full mt-1" 
+                                   required>
+                            @error('date_published')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <button type="submit">
+                            submit
+                        </button>
+                        
+                    </form>
+                </div>
+
+                <!-- List of News Posts -->
+                <div class="mt-8">
+                    <h3 class="text-lg font-semibold mb-4">All News Posts</h3>
+                    <div class="space-y-4">
+                        @foreach($news as $new)
+                            <div class="p-4 bg-gray-100 rounded-lg">
+                                <h4 class="font-semibold">{{ $new->headline }}</h4>
+                                <p>{{ $new->content }}</p>
+                                <p class="text-sm text-gray-600">
+                                    Published by {{ $new->user->name }} on {{ $new->date_published }}
+                                </p>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-            @endforeach
-        </div>
-    </div>
-
-    
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </x-app-layout>

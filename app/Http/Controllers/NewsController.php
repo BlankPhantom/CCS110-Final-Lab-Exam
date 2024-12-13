@@ -13,7 +13,7 @@ class NewsController extends Controller
         public function create()
         {
        
-            $news = News::with('user')->get();
+            $news = News::with('user')->latest()->get();
             
             // Pass the blogs to the dashboard view
             return view('dashboard', compact('news'));
@@ -33,7 +33,7 @@ class NewsController extends Controller
     
             // Create a new blog post and associate it with the authenticated user
             $news = new News();
-            $news->headline = $request->title;
+            $news->headline = $request->headline;
             $news->content = $request->content;
             $news->author = $request->author;
             $news->date_published = $request->date_published;
@@ -44,6 +44,6 @@ class NewsController extends Controller
             Session::flash('success', 'Post successfully created!');
     
             // Redirect to the dashboard, which will now display all posts including the new one
-            return redirect()->route('create-post');
+            return redirect()->route('dashboard');
         }
 }
