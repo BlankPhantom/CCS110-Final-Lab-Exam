@@ -42,6 +42,8 @@
                             Search
                         </button>
                     </div>
+
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-black rounded-lg">Search</button>
                 </form>
 
                 <!-- Form to Create News Post -->
