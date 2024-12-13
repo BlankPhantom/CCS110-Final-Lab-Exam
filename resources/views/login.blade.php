@@ -42,6 +42,8 @@
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>
+            
+            <p class="mt-3 text-center">Don't have an account? <a href="/register">Register here</a></p>
         </div>
     </form>
 </x-guest-layout>
