@@ -80,7 +80,27 @@
                                 <p class="text-sm text-gray-600">
                                     Published by {{ $new->user->name }} on {{ $new->date_published }}
                                 </p>
+                                <!-- Edit and Delete Buttons -->
+                            <div class="flex space-x-2 mt-4">
+                                <!-- Edit Button -->
+                                <a href="{{ route('news.edit', $new->id) }}" 
+                                class="px-4 py-2 bg-blue-500 text-black rounded-lg">
+                                    Edit
+                                </a>
+
+                                <!-- Delete Button -->
+                                <form action="{{ route('news.destroy', $new->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" 
+                                            class="px-4 py-2 bg-red-500 text-black rounded-lg"
+                                            onclick="return confirm('Are you sure you want to delete this news post?');">
+                                        Delete
+                                    </button>
+                                </form>
                             </div>
+                            </div>
+                            
                         @endforeach
                     </div>
                 </div>

@@ -26,7 +26,7 @@ class NewsController extends Controller
             // Validate the input data
             $validated = $request->validate([
                 'headline' => 'required|min:10',
-                'content' => 'required|min:100',
+                'content' => 'required|min:100|max:65535',
                 'date_published' => 'required|date',
 
             ]);
@@ -45,5 +45,40 @@ class NewsController extends Controller
     
             // Redirect to the dashboard, which will now display all posts including the new one
             return redirect()->route('dashboard');
+        }
+
+        public function edit($id)
+        {
+            $news = News::findOrFail($id); // Fetch the news post by ID
+            return view('news.edit', compact('news')); // Pass it to the edit view
+        }
+
+        public function update(Request $request, $id)
+        {
+            // Validate the input data
+            $validated = $request->validate([
+                'headline' => 'required|min:10',
+                'content' => 'required|min:100',
+                'date_published' => 'required|date',
+            ]);
+
+            // Find the news post and update it
+            $news = News::findOrFail($id);
+            $news->headline = $request->headline;
+            $news->content = $request->content;
+            $news->date_published = $request->date_published;
+            $news->save();
+
+            // Redirect back with a success message
+            return redirect()->route('dashboard')->with('success', 'News post updated successfully.');
+        }
+
+        public function destroy($id)
+        {
+            $news = News::findOrFail($id); // Fetch the news post by ID
+            $news->delete(); // Delete the post
+
+            // Redirect back with a success message
+            return redirect()->route('dashboard')->with('success', 'News post deleted successfully.');
         }
 }

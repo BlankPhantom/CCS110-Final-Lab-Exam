@@ -17,6 +17,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
+Route::delete('/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
+Route::patch('/update/{id}', [NewsController::class, 'update'])->name('news.update');
 Route::post('/store-news', [NewsController::class, 'store_news'])->name('store-news');
 
 require __DIR__.'/auth.php';
