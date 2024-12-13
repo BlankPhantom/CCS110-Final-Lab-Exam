@@ -9,6 +9,8 @@ Route::get('/', function () {
     return view('login');
 });
 
+Route::get('/dashboard', [NewsController::class, 'create'])->name('dashboard');
+
 Route::get('/dashboard', [NewsController::class, 'create'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -18,6 +20,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/search-news', [NewsController::class, 'search'])->name('news.search');
+Route::post('/store-news', [NewsController::class, 'store_news'])->name('store-news');
 
 Route::middleware('auth')->group(function () {
     Route::post('/store-news', [NewsController::class, 'store_news'])->name('store-news');
